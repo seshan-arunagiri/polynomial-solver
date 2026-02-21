@@ -5,12 +5,12 @@ import java.util.*;
 
 public class Main {
 
-    // decode "encrypted" value (base conversion)
+    // Decode base-encoded value
     static BigInteger decode(String val, int base) {
         return new BigInteger(val, base);
     }
 
-    // Lagrange interpolation to get f(0)
+    // Lagrange interpolation to compute f(0)
     static BigInteger findConstant(
             List<BigInteger> xs,
             List<BigInteger> ys,
@@ -33,8 +33,8 @@ public class Main {
 
             ans = ans.add(
                     ys.get(i)
-                            .multiply(num)
-                            .divide(den)
+                      .multiply(num)
+                      .divide(den)
             );
         }
         return ans;
@@ -42,9 +42,13 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        if (args.length == 0) {
+            System.out.println("Please provide input JSON file.");
+            return;
+        }
         String text =
                 new String(Files.readAllBytes(
-                        Paths.get("input.json")));
+                        Paths.get(args[0])));
 
         int k =
                 Integer.parseInt(
@@ -79,6 +83,6 @@ public class Main {
         BigInteger secret =
                 findConstant(xs, ys, k);
 
-        System.out.println("Secret = " + secret);
+        System.out.println(secret);
     }
 }
